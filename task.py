@@ -80,6 +80,13 @@ class School:
                 for m in i['classes'][j]['attendance']:
                     self.add_student_attendance_class(name, surname, m, j)
 
+    def save_to_file(self, filename):
+        with open(filename, 'w') as f:
+            data=[]
+            for x in self.students:
+                data.append({"name": x[0], "surname": x[1], "classes":self.students[x]})
+            json.dump(data, f)
+
 @dataclass
 class SchoolSystem:
     schools : list = field(default_factory=list)
@@ -156,3 +163,5 @@ if __name__ == "__main__":
   print(schoolsystem.find_student("James", "West"))
 
   print(schoolsystem.find_schools_students("school2"))
+
+  school1.save_to_file("output_data.json")
